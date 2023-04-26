@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' show clampDouble;
+import 'package:flutter/foundation.dart' show ValueListenable, clampDouble;
 import 'package:flutter/material.dart';
 
 // See: /flutter/lib/src/material/desktop_text_selection.dart
@@ -27,7 +27,7 @@ class DesktopTextSelectionToolbarCustom extends StatelessWidget {
     super.key,
   });
 
-  final ClipboardStatusNotifier? clipboardStatus;
+  final ValueListenable<ClipboardStatus>? clipboardStatus;
   final List<TextSelectionPoint> endpoints;
   final Rect globalEditableRegion;
   final VoidCallback? handleCopy;
@@ -154,9 +154,7 @@ class _DesktopTextSelectionToolbarButton extends StatelessWidget {
           text,
           overflow: TextOverflow.ellipsis,
           style: _kToolbarButtonFontStyle.copyWith(
-            color: Theme.of(context).colorScheme.brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black87,
+            color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Colors.white : Colors.black87,
           ),
         );
 

@@ -46,17 +46,19 @@ class _CopyButtonState extends State<CopyButton> {
           if (textWidget is RichText) {
             text = textWidget.text.toPlainText();
           }
-          await Clipboard.setData(ClipboardData(text: text));
-          setState(() {
-            _copied = true;
-            Future.delayed(const Duration(seconds: 1)).then((value) {
-              if (mounted) {
-                setState(() {
-                  _copied = false;
-                });
-              }
+          if (text != null) {
+            await Clipboard.setData(ClipboardData(text: text));
+            setState(() {
+              _copied = true;
+              Future.delayed(const Duration(seconds: 1)).then((value) {
+                if (mounted) {
+                  setState(() {
+                    _copied = false;
+                  });
+                }
+              });
             });
-          });
+          }
         },
       ),
     );

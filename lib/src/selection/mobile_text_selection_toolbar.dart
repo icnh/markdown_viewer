@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -29,7 +30,7 @@ class MobileTextSelectionToolbar extends StatelessWidget {
     super.key,
   });
 
-  final ClipboardStatusNotifier? clipboardStatus;
+  final ValueListenable<ClipboardStatus>? clipboardStatus;
   final TextSelectionDelegate delegate;
   final List<TextSelectionPoint> endpoints;
   final Rect globalEditableRegion;
@@ -59,22 +60,16 @@ class MobileTextSelectionToolbar extends StatelessWidget {
     }
 
     final startTextSelectionPoint = endpoints[0];
-    final topAmountInEditableRegion =
-        startTextSelectionPoint.point.dy - textLineHeight;
-    final anchorTop = math.max(topAmountInEditableRegion, 0) +
-        globalEditableRegion.top -
-        _kToolbarContentDistance;
+    final topAmountInEditableRegion = startTextSelectionPoint.point.dy - textLineHeight;
+    final anchorTop = math.max(topAmountInEditableRegion, 0) + globalEditableRegion.top - _kToolbarContentDistance;
     final anchorAbove = Offset(
       globalEditableRegion.left + selectionMidpoint.dx,
       anchorTop,
     );
-    final endTextSelectionPoint =
-        endpoints.length > 1 ? endpoints[1] : endpoints[0];
+    final endTextSelectionPoint = endpoints.length > 1 ? endpoints[1] : endpoints[0];
     final anchorBelow = Offset(
       globalEditableRegion.left + selectionMidpoint.dx,
-      globalEditableRegion.top +
-          endTextSelectionPoint.point.dy +
-          _kToolbarContentDistanceBelow,
+      globalEditableRegion.top + endTextSelectionPoint.point.dy + _kToolbarContentDistanceBelow,
     );
 
     return TextSelectionToolbar(
@@ -84,8 +79,7 @@ class MobileTextSelectionToolbar extends StatelessWidget {
           .asMap()
           .entries
           .map(
-            (MapEntry<int, _TextSelectionToolbarItemData> entry) =>
-                TextSelectionToolbarTextButton(
+            (MapEntry<int, _TextSelectionToolbarItemData> entry) => TextSelectionToolbarTextButton(
               padding: TextSelectionToolbarTextButton.getPadding(
                 entry.key,
                 itemDatas.length,

@@ -12,13 +12,11 @@ extension WidgetExtensions on Widget {
 
     if (self is MultiChildRenderObjectWidget) {
       map.addAll({
-        if (self.children.isNotEmpty)
-          'children': self.children.map((e) => e.toMap()).toList(),
+        if (self.children.isNotEmpty) 'children': self.children.map((e) => e.toMap()).toList(),
       });
 
       if (self is RichText) {
-        final text =
-            (self.text is TextSpan) ? (self.text as TextSpan).toMap() : null;
+        final text = (self.text is TextSpan) ? (self.text as TextSpan).toMap() : null;
 
         map.addAll({
           'textAlign': self.textAlign.toString(),
@@ -95,8 +93,7 @@ extension TextSpanExtensions on TextSpan {
       'type': runtimeType.toString(),
       if (text != null) 'text': text,
       if (style != null) 'style': style!.toMap(),
-      if (children != null && children!.isNotEmpty)
-        'children': children!.map((e) => (e as TextSpan).toMap()).toList(),
+      if (children != null && children!.isNotEmpty) 'children': children!.map((e) => (e as TextSpan).toMap()).toList(),
       if (recognizer != null) 'recognizer': recognizer.runtimeType.toString(),
     };
   }
@@ -108,8 +105,7 @@ extension TableRowExtensions on TableRow {
   Map<String, dynamic> toMap() {
     return {
       'type': runtimeType.toString(),
-      if (children != null && children!.isNotEmpty)
-        'children': children!.map((e) => e.toMap()).toList(),
+      if (children.isNotEmpty) 'children': children.map((e) => e.toMap()).toList(),
     };
   }
 }
@@ -178,12 +174,9 @@ extension TextStyleExtensions on TextStyle {
         if (fontSize != null) 'fontSize': fontSize,
         if (fontStyle != null) 'fontStyle': fontStyle.toString(),
         if (color != null) 'color': color.toString(),
-        if (decoration != null && decoration != TextDecoration.none)
-          'decoration': decoration.toString(),
-        if (backgroundColor != null)
-          'backgroundColor': backgroundColor.toString(),
-        if (fontFeatures != null)
-          'fontFeatures': fontFeatures!.map((e) => e.toString()).toList(),
+        if (decoration != null && decoration != TextDecoration.none) 'decoration': decoration.toString(),
+        if (backgroundColor != null) 'backgroundColor': backgroundColor.toString(),
+        if (fontFeatures != null) 'fontFeatures': fontFeatures!.map((e) => e.toString()).toList(),
       };
 
   String toPrettyString() => toMap().toPrettyString();
@@ -233,5 +226,4 @@ extension MapsExtensions on List<Map<String, dynamic>> {
   }
 }
 
-String _toPrettyString(Object object) =>
-    const JsonEncoder.withIndent("  ").convert(object);
+String _toPrettyString(Object object) => const JsonEncoder.withIndent("  ").convert(object);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,11 +13,10 @@ class MarkdownSelectionControls extends MaterialTextSelectionControls {
     double textHeight, [
     VoidCallback? onTap,
   ]) {
-    return _isDesktop(context)
-        ? const SizedBox.shrink()
-        : super.buildHandle(context, type, textHeight, onTap);
+    return _isDesktop(context) ? const SizedBox.shrink() : super.buildHandle(context, type, textHeight, onTap);
   }
 
+  @override
   @override
   Widget buildToolbar(
     BuildContext context,
@@ -25,7 +25,7 @@ class MarkdownSelectionControls extends MaterialTextSelectionControls {
     Offset selectionMidpoint,
     List<TextSelectionPoint> endpoints,
     TextSelectionDelegate delegate,
-    ClipboardStatusNotifier? clipboardStatus,
+    ValueListenable<ClipboardStatus>? clipboardStatus,
     Offset? lastSecondaryTapDownPosition,
   ) {
     if (_isDesktop(context)) {
@@ -34,8 +34,7 @@ class MarkdownSelectionControls extends MaterialTextSelectionControls {
         endpoints: endpoints,
         globalEditableRegion: globalEditableRegion,
         handleCopy: canCopy(delegate) ? () => handleCopy(delegate) : null,
-        handleSelectAll:
-            canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
+        handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
         selectionMidpoint: selectionMidpoint,
         lastSecondaryTapDownPosition: lastSecondaryTapDownPosition,
         textLineHeight: textLineHeight,
@@ -49,8 +48,7 @@ class MarkdownSelectionControls extends MaterialTextSelectionControls {
         delegate: delegate,
         clipboardStatus: clipboardStatus,
         handleCopy: canCopy(delegate) ? () => _handleCopy(delegate) : null,
-        handleSelectAll:
-            canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
+        handleSelectAll: canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,
       );
     }
   }
@@ -73,7 +71,6 @@ class MarkdownSelectionControls extends MaterialTextSelectionControls {
   }
 
   bool _isDesktop(BuildContext context) {
-    return [TargetPlatform.windows, TargetPlatform.linux, TargetPlatform.macOS]
-        .contains(Theme.of(context).platform);
+    return [TargetPlatform.windows, TargetPlatform.linux, TargetPlatform.macOS].contains(Theme.of(context).platform);
   }
 }
